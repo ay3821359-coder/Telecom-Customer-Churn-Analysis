@@ -223,3 +223,30 @@ HAVING
 ORDER BY
     churn_rate DESC;
 
+Q19. Find churned customers without TechSupport
+SELECT
+    customerID,
+    Contract,
+    TechSupport,
+    Churn
+FROM
+    `customer-churn-analysis-514909.customer_churn.telco_customers`
+WHERE
+    TechSupport = 'No'
+    AND Churn = TRUE;
+    
+ Q20. Calculate churn rate by Senior Citizen status
+
+SELECT
+    SeniorCitizen,
+    COUNT(*) AS total_customers,
+    COUNTIF(Churn = TRUE) AS churned_customers,
+    ROUND(
+        SAFE_DIVIDE(COUNTIF(Churn = TRUE) * 100, COUNT(*)), 2
+    ) AS churn_rate
+FROM
+    `customer-churn-analysis-514909.customer_churn.telco_customers`
+GROUP BY
+    SeniorCitizen
+ORDER BY
+    churn_rate DESC;
